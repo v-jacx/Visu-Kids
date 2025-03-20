@@ -1,19 +1,21 @@
 const express = require('express');
-const pool = require('./db');
-const app = express();
+const db = require('./db');
+const routes = require('./routes');
+const cors = require('cors');
+const logger = require('morgan');
+
 const PORT = 3000;
 
-const connectPg = async () => {
-    try {
-        const response = await pool.connect();
-        
-        if (response['_connected']) {
-            console.log('Connected to PostgreSQL');
-        }
+const app = express();
 
-    } catch (err) {
-        console.error("Error connecting to PostgreSQL: ", err);
-    }
-};
+app.use(express.json());
+app.use(cors())
+app.use(logger('dev'))
 
-connectPg();
+app.use('/api', routes);
+
+db.on('error', console.error.bind(console, 'PostgreSQL connection error:'));
+
+app.listen(PORT, ()=> console.log(`Listening on port: ${PORT}`));
+
+module.exports = app;

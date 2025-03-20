@@ -14,4 +14,19 @@ const pool = new Pool({
     port: 5432
 });
 
+const connectPg = async () => {
+    try {
+        const response = await pool.connect();
+        
+        if (response['_connected']) {
+            console.log('Connected to PostgreSQL');
+        }
+
+    } catch (err) {
+        console.error("Error connecting to PostgreSQL: ", err);
+    }
+};
+
+connectPg();
+
 module.exports = pool;
