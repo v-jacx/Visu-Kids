@@ -6,5 +6,3 @@ RUN npm install
 COPY frontend/. ./
 EXPOSE 19000
 CMD ["npm", "start"]
-
-#Build the backend

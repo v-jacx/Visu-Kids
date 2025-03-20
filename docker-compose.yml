@@ -1,13 +1,37 @@
 services:
-  app:
+  frontend:
     build:
-      context: .
-      dockerfile: Dockerfile
+      dockerfile: ./frontend/Dockerfile
     ports:
       - "8081:8081"
-      - "19000:19000"
     volumes:
       - app:/home/expo
+  backend:
+    environment:
+      myapp_env: docker
+    env_file:
+      - "./.env"
+    build:
+      dockerfile: ./backend/Dockerfile
+    ports:
+    - "3000:3000"
+    volumes:
+      - app:/home/server
+    depends_on:
+      database:
+        condition: service_healthy
+  database:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -q -d ${POSTGRES_DB} -U ${POSTGRES_USER}"]
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
 volumes:
+  db_data:
   app:
-    
