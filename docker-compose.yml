@@ -7,8 +7,6 @@ services:
     volumes:
       - app:/home/expo
   backend:
-    environment:
-      myapp_env: docker
     env_file:
       - "./.env"
     build:
@@ -20,6 +18,7 @@ services:
     depends_on:
       database:
         condition: service_healthy
+    command: [ sh, -c, "npx sequelize-cli db:migrate"]
   database:
     image: postgres:latest
     environment:

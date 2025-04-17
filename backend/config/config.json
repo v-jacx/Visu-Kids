@@ -1,0 +1,22 @@
+{
+  "development": {
+    "database": "visu_kids_db",
+    "host": "database",
+    "username":"user",
+    "password":"pg_pass",
+    "dialect": "postgres",
+    "define": {
+      "underscored": true
+    }
+  },
+  "test": {
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "database": "database_production",
+    "host": "database",
+    "dialect": "postgres"
+  }
+}
