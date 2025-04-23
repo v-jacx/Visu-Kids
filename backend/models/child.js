@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Child extends Model {
     /**
@@ -19,14 +17,24 @@ module.exports = (sequelize, DataTypes) => {
       })
       Child.hasMany(models.Task, {
         foreignKey: 'child_id',
-        as: 'task',
+        as: 'tasks',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       })
     }
   }
   Child.init({
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    parentId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'parent_id',
+      onDelete: 'CASCADE',
+      references: {
+        model: 'parents',
+        key: 'id'
+      }
+    }
   }, {
     sequelize,
     modelName: 'Child',

@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Tasks', {
+    await queryInterface.createTable('tasks', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -23,22 +23,36 @@ module.exports = {
       childId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        field: 'child_id',
+        onDelete: 'CASCADE',
+        references: {
+          model: 'children',
+          key: 'id'
+        }
       },
       parentId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        field: 'parent_id',
+        onDelete: 'CASCADE',
+        references: {
+          model: 'parents',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        field: 'created_at'
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        field: 'updated_at'
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Tasks');
+    await queryInterface.dropTable('tasks');
   }
 };

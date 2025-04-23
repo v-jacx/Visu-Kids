@@ -1,5 +1,11 @@
-const { Router } = require('express');
+const Router = require('express').Router();
+const parentController = require('../controllers/ParentController');
 
-const router = Router();
+// Parent api routes
+Router.use('/parents',
+    [
+        Router.get('/:id', parentController.GetParent),
+        Router.post('/new', parentController.CreateParent)
+    ]);
 
-module.exports = router;
+module.exports = Router;

@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Children', {
+    await queryInterface.createTable('children', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,17 +12,31 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      createdAt: {
+      parentId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        type: Sequelize.DATE
+        field: 'parent_id',
+        onDelete: 'CASCADE',
+        references: {
+          model: 'parents',
+          key: 'id'
+        }
+      },
+      createdAt: {
+        field: 'created_at',
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: new Date()
       },
       updatedAt: {
+        field: 'updated_at',
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: new Date()
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Children');
+    await queryInterface.dropTable('children');
   }
 };

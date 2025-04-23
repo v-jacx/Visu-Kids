@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Parent.hasMany(models.Child, {
         foreignKey: 'parent_id',
-        as: 'child',
+        as: 'children',
         onDelete: 'cascade',
         onUpdate: 'cascade'
       })

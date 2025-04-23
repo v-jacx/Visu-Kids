@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       })
       Task.belongsTo(models.Child, {
         foreignKey: 'child_id',
-        as: 'task',
+        as: 'tasks',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       })
@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
         field: 'child_id',
         onDelete: 'CASCADE',
         references: {
-          model: 'child',
+          model: 'children',
           key: 'id'
         }
       },
@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
         field: 'parent_id',
         onDelete: 'CASCADE',
         references: {
-          model: 'parent',
+          model: 'parents',
           key: 'id'
         }
       }
