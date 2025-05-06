@@ -5,7 +5,12 @@ const parentController = require('../controllers/ParentController');
 Router.use('/parents',
     [
         Router.get('/:id', parentController.GetParent),
-        Router.post('/new', parentController.CreateParent)
+        Router.post('/new', parentController.CreateParent),
+        Router.delete('/delete/:id', parentController.DeleteParent),
+        Router.use('/update',
+            [
+                Router.post('/:id', parentController.updateParent)
+            ])
     ]);
 
 module.exports = Router;
